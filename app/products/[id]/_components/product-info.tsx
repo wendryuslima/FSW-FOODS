@@ -138,6 +138,10 @@ const ProductInfo = ({ product, complementrayProducts }: ProductInfoProps) => {
         <h3 className="font-semibold">Sucos</h3>
         <ProductList products={complementrayProducts} />
       </div>
+
+      <div className=" mt-6 px-5 ">
+        <Button className="w-full font-semibold">Adicionar a sacola</Button>
+      </div>
     </div>
   );
 };
