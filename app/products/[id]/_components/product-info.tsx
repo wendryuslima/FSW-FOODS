@@ -125,13 +125,7 @@ const ProductInfo = ({ product, complementrayProducts }: ProductInfoProps) => {
             <span className="text-xs">Tempo de entrega</span>
           </div>
 
-          {Number(product.restaurant.deliveryFee) > 0 ? (
-            <p className="text-xs font-semibold">
-              {formatCurrency(Number(product.restaurant.deliveryFee))}
-            </p>
-          ) : (
-            <p className="text-sm font-semibold">Grátis</p>
-          )}
+          <p>{product.restaurant.deliveryTimeMinutes} min</p>
         </div>
       </Card>
 
