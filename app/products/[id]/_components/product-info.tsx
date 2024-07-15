@@ -43,7 +43,7 @@ const ProductInfo = ({ product, complementrayProducts }: ProductInfoProps) => {
       return currentSate - 1;
     });
   return (
-    <div className="p-5">
+    <div className="relative z-50 mt-[-1.5rem] rounded-tl-3xl rounded-tr-3xl bg-white p-5">
       {/* {Nome do resturante} */}
       <div className="flex items-center gap-[0.375rem]">
         <div className="relative h-6 w-6">
