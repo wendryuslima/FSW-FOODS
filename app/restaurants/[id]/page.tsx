@@ -5,6 +5,7 @@ import Image from "next/image";
 import { StarIcon } from "lucide-react";
 import DeliveryInfo from "@/app/_components/delivery-info";
 import ProductList from "@/app/_components/product-list";
+import CartBanner from "./_components/cart-banner";
 
 interface RestaurantPageProps {
   params: {
@@ -96,6 +97,17 @@ const RestaurantsPage = async ({ params: { id } }: RestaurantPageProps) => {
         <h2 className="px-5 font-semibold">Mais pedidos</h2>
         <ProductList products={restaurant.products} />
       </div>
+
+      <div className=" mt-6 px-5 "></div>
+
+      {restaurant.categories.map((category) => (
+        <div className="mt-6 space-y-4" key={category.id}>
+          {/* TODO: mostrar produtos mais pedidos quando implementarmos realização de pedido */}
+          <h2 className="px-5  font-semibold">{category.name}</h2>
+          <ProductList products={category.products} />
+        </div>
+      ))}
+      <CartBanner restaurant={restaurant} />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { db } from "@/app/_lib/prisma";
 import { notFound } from "next/navigation";
 import ProductImage from "./_components/produt-image";
 import ProductInfo from "./_components/product-info";
+import CartBanner from "@/app/restaurants/[id]/_components/cart-banner";
 
 interface ProductPageProps {
   params: {
@@ -42,6 +43,8 @@ const ProductPage = async ({ params: { id } }: ProductPageProps) => {
       <ProductImage product={product} />
 
       <ProductInfo product={product} complementrayProducts={juices} />
+
+      <CartBanner restaurant={product} />
     </div>
   );
 };
