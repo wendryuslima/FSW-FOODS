@@ -170,7 +170,7 @@ const ProductInfo = ({ product, complementrayProducts }: ProductInfoProps) => {
       <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
         <SheetContent className="w-[70vw]">
           <SheetTitle>Sacola</SheetTitle>
-          <Cart />
+          <Cart setIsOpen={setIsCartOpen} />
         </SheetContent>
       </Sheet>
       <AlertDialog
