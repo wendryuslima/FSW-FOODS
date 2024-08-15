@@ -50,7 +50,7 @@ const ProductInfo = ({ product, complementrayProducts }: ProductInfoProps) => {
     useState(false);
 
   const addToCart = ({ emptyCart = false }: { emptyCart?: boolean }) => {
-    addProductsToCart({ product, quantity, emptyCart });
+    addProductsToCart({ product, emptyCart, quantity });
     setIsCartOpen(true);
   };
 

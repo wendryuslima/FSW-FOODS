@@ -91,23 +91,27 @@ const Header = () => {
           </div>
 
           <div className="space-y-2">
-            <Button
-              variant="ghost"
-              className="w-full justify-start space-x-3 font-normal "
-            >
-              <HomeIcon size={16} />
-              <span className="block">Início</span>
-            </Button>
+            <Link href="/">
+              <Button
+                variant="ghost"
+                className="w-full justify-start space-x-3 font-normal "
+              >
+                <HomeIcon size={16} />
+                <span className="block">Início</span>
+              </Button>
+            </Link>
 
             {data?.user && (
               <>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start space-x-3 font-normal"
-                >
-                  <ScrollTextIcon size={16} />
-                  <span className="block">Meus Pedidos</span>
-                </Button>
+                <Link href="/my-orders">
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start space-x-3 font-normal"
+                  >
+                    <ScrollTextIcon size={16} />
+                    <span className="block">Meus Pedidos</span>
+                  </Button>
+                </Link>
 
                 <Button
                   variant="ghost"

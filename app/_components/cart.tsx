@@ -30,37 +30,40 @@ const Cart = () => {
     useContext(CartContext);
 
   const handleFinishOrderClick = async () => {
-    const user = data?.user;
+    if (!data?.user) return;
 
-    if (!user) return;
-
-    const restaurant = products[0]?.restaurant;
-
-    if (!restaurant) return;
+    const restaurant = products[0].restaurant;
 
     try {
       setIsSubmitLoading(true);
-
-      const deliveryTimeMinutes = restaurant.deliveryTimeMinutes || 30;
 
       await createOrder({
         subtotalPrice,
         totalDiscounts,
         totalPrice,
         deliveryFee: restaurant.deliveryFee,
-        deliveryTimeMinutes,
+        deliveryTimeMinutes: restaurant.deliveryTimeMinutes || 30,
+
         restaurants: {
           connect: { id: restaurant.id },
         },
         status: OrderStatus.CONFIRMED,
         user: {
-          connect: { id: user.id },
+          connect: { id: data.user.id },
+        },
+        products: {
+          createMany: {
+            data: products.map((product) => ({
+              productId: product.id,
+              quantity: product.quantity,
+            })),
+          },
         },
       });
 
       clearCart();
     } catch (error) {
-      console.error("Error creating order:", error);
+      console.error(error);
     } finally {
       setIsSubmitLoading(false);
     }
