@@ -25,6 +25,7 @@ interface ICartContext {
   subtotalPrice: number;
   totalPrice: number;
   totalDiscounts: number;
+  totalQuantity: number;
   addProductsToCart: ({
     product,
     quantity,
@@ -34,7 +35,9 @@ interface ICartContext {
       include: {
         restaurant: {
           select: {
+            id: true;
             deliveryFee: true;
+            deliveryTimeMinutes: true;
           };
         };
       };
@@ -53,6 +56,7 @@ export const CartContext = createContext<ICartContext>({
   subtotalPrice: 0,
   totalPrice: 0,
   totalDiscounts: 0,
+  totalQuantity: 0,
   addProductsToCart: () => {},
   decreaseProductQuantity: () => {},
   increaseProductQuantity: () => {},
@@ -129,7 +133,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       include: {
         restaurant: {
           select: {
+            id: true;
             deliveryFee: true;
+            deliveryTimeMinutes: true;
           };
         };
       };
@@ -167,6 +173,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         products,
         subtotalPrice,
         totalDiscounts,
+        totalQuantity: 0,
         totalPrice,
         addProductsToCart,
         decreaseProductQuantity,
