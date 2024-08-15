@@ -4,7 +4,7 @@ import { formatCurrency } from "../_helpers/price";
 import { Restaurant } from "@prisma/client";
 
 interface DeliveryInfoProps {
-  restaurant: Pick<Restaurant, "deliveryFee" | "deliveryTimeMinutesMinutes">;
+  restaurant: Pick<Restaurant, "deliveryFee" | "deliveryTimeMinutes">;
 }
 
 const DeliveryInfo = ({ restaurant }: DeliveryInfoProps) => {
@@ -31,7 +31,7 @@ const DeliveryInfo = ({ restaurant }: DeliveryInfoProps) => {
           <span className="text-xs">Tempo de entrega</span>
         </div>
 
-        <p>{restaurant.deliveryTimeMinutesMinutes} min</p>
+        <p>{restaurant.deliveryTimeMinutes} min</p>
       </div>
     </Card>
   );
