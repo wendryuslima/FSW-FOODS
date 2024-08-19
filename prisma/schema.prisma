@@ -8,14 +8,25 @@ datasource db {
 }
 
 model Restaurant {
-  id                         String     @id @default(uuid())
-  name                       String
-  imageUrl                   String
-  deliveryFee                Decimal    @db.Decimal(10, 2)
-  deliveryTimeMinutes   Int     @default(30)
-  categories                 Category[]
-  products                   Product[]
-  order                      Order[]
+  id                  String                   @id @default(uuid())
+  name                String
+  imageUrl            String
+  deliveryFee         Decimal                  @db.Decimal(10, 2)
+  deliveryTimeMinutes Int                      @default(30)
+  categories          Category[]
+  products            Product[]
+  order               Order[]
+  usersWhoFavorited   UserFavoriteRestaurant[]
+}
+
+model UserFavoriteRestaurant {
+  userId       String
+  user         User       @relation(fields: [userId], references: [id])
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  createdAt    DateTime   @default(now())
+
+  @@id([userId, restaurantId])
 }
 
 model Category {
@@ -38,7 +49,7 @@ model Product {
   categoryId         String
   category           Category       @relation(fields: [categoryId], references: [id])
   createdAt          DateTime       @default(now())
-  OrderProducts       OrderProduct[]
+  OrderProducts      OrderProduct[]
 }
 
 model OrderProduct {
@@ -105,14 +116,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  order         Order[]
+  id                  String                   @id @default(cuid())
+  name                String?
+  email               String?                  @unique
+  emailVerified       DateTime?                @map("email_verified")
+  image               String?
+  accounts            Account[]
+  sessions            Session[]
+  order               Order[]
+  favoriteRestaurants UserFavoriteRestaurant[]
 
   @@map("users")
 }
