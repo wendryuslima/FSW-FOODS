@@ -7,6 +7,9 @@ import DeliveryInfo from "@/app/_components/delivery-info";
 import ProductList from "@/app/_components/product-list";
 import CartBanner from "./_components/cart-banner";
 
+import { authOptions } from "@/app/_lib/auth";
+import { getServerSession } from "next-auth";
+
 interface RestaurantPageProps {
   params: {
     id: string;
@@ -52,9 +55,19 @@ const RestaurantsPage = async ({ params: { id } }: RestaurantPageProps) => {
     return notFound();
   }
 
+  const session = await getServerSession(authOptions);
+  const userFavoriteRestaurants = await db.userFavoriteRestaurant.findMany({
+    where: {
+      userId: session?.user.id,
+    },
+  });
+
   return (
     <div>
-      <RestaurantImage restaurant={restaurant} />
+      <RestaurantImage
+        restaurant={restaurant}
+        userFavoritesRestaurants={userFavoriteRestaurants}
+      />
 
       <div className="relative z-50 mt-[-1.5rem] flex items-center justify-between rounded-tl-3xl rounded-tr-3xl bg-white px-5 pt-5">
         {/* {titulo} */}
