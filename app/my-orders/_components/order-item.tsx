@@ -40,14 +40,17 @@ const getOrderStatusLabel = (status: OrderStatus) => {
 };
 
 const OrdemItem = ({ order }: OrdemItemProps) => {
-  const { addProductsToCart } = useContext(CartContext);
+  const { addProductToCart } = useContext(CartContext);
 
   const router = useRouter();
   const handleRedoOrderClick = () => {
     for (const orderProduct of order.products) {
-      addProductsToCart({
-        product: { ...orderProduct.product, restaurant: order.restaurants },
-        quantity: orderProduct.quantity,
+      addProductToCart({
+        product: {
+          ...orderProduct.product,
+          restaurant: order.restaurants,
+          quantity: orderProduct.quantity,
+        },
       });
     }
 

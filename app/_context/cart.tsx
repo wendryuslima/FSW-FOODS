@@ -26,23 +26,11 @@ interface ICartContext {
   totalPrice: number;
   totalDiscounts: number;
   totalQuantity: number;
-  addProductsToCart: ({
+  addProductToCart: ({
     product,
-    quantity,
     emptyCart,
   }: {
-    product: Prisma.ProductGetPayload<{
-      include: {
-        restaurant: {
-          select: {
-            id: true;
-            deliveryFee: true;
-            deliveryTimeMinutes: true;
-          };
-        };
-      };
-    }>;
-    quantity: number;
+    product: CartProduct;
     emptyCart?: boolean;
   }) => void;
   decreaseProductQuantity: (productId: string) => void;
@@ -57,7 +45,7 @@ export const CartContext = createContext<ICartContext>({
   totalPrice: 0,
   totalDiscounts: 0,
   totalQuantity: 0,
-  addProductsToCart: () => {},
+  addProductToCart: () => {},
   decreaseProductQuantity: () => {},
   increaseProductQuantity: () => {},
   removeProductsFromCart: () => {},
@@ -73,11 +61,14 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }, 0);
   }, [products]);
 
-  const totalPrice = useMemo(() => {
-    return products.reduce((acc, product) => {
+  const totalPrice =
+    products.reduce((acc, product) => {
       return acc + calculateProductTotalPrice(product) * product.quantity;
-    }, 0);
-  }, [products]);
+    }, 0) + Number(products?.[0]?.restaurant?.deliveryFee);
+
+  const totalQuantity = products.reduce((acc, product) => {
+    return acc + product.quantity;
+  }, 0);
 
   const clearCart = () => {
     return setProducts([]);
@@ -85,7 +76,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const totalDiscounts = subtotalPrice - totalPrice;
 
-  const decreaseProductQuantity = (productId: string) => {
+  const decreaseProductQuantity: ICartContext["decreaseProductQuantity"] = (
+    productId: string,
+  ) => {
     return setProducts((prev) =>
       prev.map((cartProduct) => {
         if (cartProduct.id === productId) {
@@ -103,7 +96,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
-  const increaseProductQuantity = (productId: string) => {
+  const increaseProductQuantity: ICartContext["increaseProductQuantity"] = (
+    productId: string,
+  ) => {
     return setProducts((prev) =>
       prev.map((cartProduct) => {
         if (cartProduct.id === productId) {
@@ -118,33 +113,20 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
-  const removeProductsFromCart = (productId: string) => {
+  const removeProductsFromCart: ICartContext["removeProductsFromCart"] = (
+    productId: string,
+  ) => {
     return setProducts((prev) =>
       prev.filter((product) => product.id !== productId),
     );
   };
 
-  const addProductsToCart = ({
+  const addProductToCart: ICartContext["addProductToCart"] = ({
     product,
-    quantity,
     emptyCart,
-  }: {
-    product: Prisma.ProductGetPayload<{
-      include: {
-        restaurant: {
-          select: {
-            id: true;
-            deliveryFee: true;
-            deliveryTimeMinutes: true;
-          };
-        };
-      };
-    }>;
-    quantity: number;
-    emptyCart?: boolean;
   }) => {
     if (emptyCart) {
-      return setProducts([]);
+      setProducts([]);
     }
     const isProductAlreadyOnCart = products.some(
       (cartProduct) => cartProduct.id === product.id,
@@ -156,7 +138,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           if (cartProduct.id === product.id) {
             return {
               ...cartProduct,
-              quantity: cartProduct.quantity + quantity,
+              quantity: cartProduct.quantity + product.quantity,
             };
           }
 
@@ -164,7 +146,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         }),
       );
     }
-    setProducts((prev) => [...prev, { ...product, quantity: quantity }]);
+    setProducts((prev) => [...prev, product]);
   };
 
   return (
@@ -175,7 +157,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         totalDiscounts,
         totalQuantity: 0,
         totalPrice,
-        addProductsToCart,
+        addProductToCart,
         decreaseProductQuantity,
         increaseProductQuantity,
         removeProductsFromCart,

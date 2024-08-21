@@ -45,12 +45,15 @@ interface ProductInfoProps {
 const ProductInfo = ({ product, complementrayProducts }: ProductInfoProps) => {
   const [quantity, setQuantity] = useState(1);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const { addProductsToCart, products } = useContext(CartContext);
+  const { addProductToCart, products } = useContext(CartContext);
   const [isConfirmationDialogOpen, SetIsConfirmationDialogOpen] =
     useState(false);
 
   const addToCart = ({ emptyCart = false }: { emptyCart?: boolean }) => {
-    addProductsToCart({ product, emptyCart, quantity });
+    addProductToCart({
+      product: { ...product, quantity },
+      emptyCart,
+    });
     setIsCartOpen(true);
   };
 
