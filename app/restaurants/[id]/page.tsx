@@ -6,6 +6,7 @@ import { StarIcon } from "lucide-react";
 import DeliveryInfo from "@/app/_components/delivery-info";
 import ProductList from "@/app/_components/product-list";
 import CartBanner from "./_components/cart-banner";
+<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>;
 
 import { authOptions } from "@/app/_lib/auth";
 import { getServerSession } from "next-auth";
@@ -63,7 +64,7 @@ const RestaurantsPage = async ({ params: { id } }: RestaurantPageProps) => {
   });
 
   return (
-    <div>
+    <div className="">
       <RestaurantImage
         restaurant={restaurant}
         userFavoritesRestaurants={userFavoriteRestaurants}
@@ -107,16 +108,23 @@ const RestaurantsPage = async ({ params: { id } }: RestaurantPageProps) => {
       </div>
 
       <div className="mt-6 space-y-4">
-        <h2 className="px-5 font-semibold">Mais pedidos</h2>
+        <h2 className="t-6 gap-2 space-y-3 px-5 font-semibold md:flex md:flex-col md:items-center  md:justify-center md:p-5">
+          Mais pedidos
+        </h2>
         <ProductList products={restaurant.products} />
       </div>
 
       <div className=" mt-6 px-5 "></div>
 
       {restaurant.categories.map((category) => (
-        <div className="mt-6 space-y-4" key={category.id}>
+        <div
+          className="t-6 gap-2  space-y-4 md:flex md:flex-col md:items-center  md:justify-center md:p-5"
+          key={category.id}
+        >
           {/* TODO: mostrar produtos mais pedidos quando implementarmos realização de pedido */}
-          <h2 className="px-5  font-semibold">{category.name}</h2>
+          <h2 className="mb-5 mt-7 gap-2 space-y-3 px-7 font-semibold md:flex md:justify-center">
+            {category.name}
+          </h2>
           <ProductList products={category.products} />
         </div>
       ))}

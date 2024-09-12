@@ -29,15 +29,17 @@ const Home = async () => {
   return (
     <>
       <Header />
-      <div className="px-5 pt-6">
+      <div className="flex items-center justify-center px-5 pt-6">
         <Search />
       </div>
 
-      <div className="p-x5 pt-6">
+      <div className=" items-center justify-center px-5 pt-6 md:flex md:flex-col">
         <CategoryList />
       </div>
 
-      <PromoBanner src={"/promo-banner-01.png"} alt="Promo-banner" />
+      <div className="flex items-center justify-center text-center">
+        <PromoBanner src={"/promo-banner-01.png"} alt="Promo-banner" />
+      </div>
 
       <div className="space-y-4 px-4 pt-6">
         <div className="flex items-center justify-between px-5">
@@ -55,7 +57,7 @@ const Home = async () => {
         <ProductList products={products} />
       </div>
 
-      <div className="py-5 pt-6">
+      <div className="flex items-center justify-center py-4 text-center">
         <PromoBanner src={"/promo-banner-02.png"} alt="Promo-banner" />
       </div>
 

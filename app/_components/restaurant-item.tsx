@@ -9,6 +9,7 @@ import Link from "next/link";
 import { cn } from "../_lib/utils";
 import { Button } from "./ui/button";
 import { toast } from "sonner";
+<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>;
 
 interface RestaurantItemProps {
   userId?: string;
@@ -45,7 +46,7 @@ const RestaurantItem = ({
       className={cn("min-w-[266px] max-w-[266px]", className)}
       href={`/restaurants/${restaurant.id}`}
     >
-      <div className="w-full space-y-3">
+      <div className="w-full flex-col items-center justify-center space-y-3 md:flex  md:flex-col md:items-center md:justify-center">
         <div className=" relative h-[136px] w-full">
           <Image
             src={restaurant.imageUrl}

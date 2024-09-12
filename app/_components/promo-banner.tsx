@@ -5,10 +5,11 @@ const PromoBanner = (props: ImageProps) => {
     <Image
       height={0}
       width={0}
-      className="h-auto w-full p-3"
+      className=" min-w-[75%] items-center justify-center p-3"
       sizes="100vw"
       quality={100}
       {...props}
+      alt="banner"
     />
   );
 };

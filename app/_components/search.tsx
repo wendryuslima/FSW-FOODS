@@ -23,7 +23,7 @@ const Search = () => {
   };
 
   return (
-    <form className="flex gap-2" onSubmit={handleSearchSubmit}>
+    <form className="flex w-[70%] gap-2" onSubmit={handleSearchSubmit}>
       <Input
         placeholder="Buscar restaurante"
         className="border-none"
