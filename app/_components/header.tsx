@@ -1,4 +1,5 @@
 "use client";
+
 import {
   HeartIcon,
   HomeIcon,
@@ -13,8 +14,9 @@ import Link from "next/link";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet";
 import { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+
 import { Separator } from "./ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const Header = () => {
   const { data, status } = useSession();
